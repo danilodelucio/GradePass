@@ -1,0 +1,1290 @@
+#! C:/Program Files/Nuke12.1v5/nuke-12.1.5.dll -nx
+version 12.1 v5
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="2559" y="-8" w="3440" h="1369" maximized="1" screen="1">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="2575" stretch="1"/>
+            <splitter orientation="2">
+                <split size="777"/>
+                <dock id="" activePageId="Viewer.1">
+                    <page id="Viewer.1"/>
+                </dock>
+                <split size="547"/>
+                <dock id="" activePageId="DAG.1">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="817"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name D:/Dropbox/DEV/GradePass/lab/GradePass_script.nk
+ project_directory "\[python \{nuke.script_directory()\}]"
+ frame 1050
+ first_frame 1001
+ last_frame 1095
+ lock_range true
+ fps 23.976
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement OCIO
+ OCIO_config aces_1.0.3
+ defaultViewerLUT "OCIO LUTs"
+ workingSpaceLUT scene_linear
+ monitorLut ACES/sRGB
+ int8Lut matte_paint
+ int16Lut texture_paint
+ logLut compositing_log
+ floatLut scene_linear
+}
+Read {
+ inputs 0
+ file_type exr
+ file D:/Dropbox/VFX_PERSONAL_PROJECTS/SOLAS/renders/portrait_v003.exr
+ format "3300 4096 0 0 3300 4096 0.999563 "
+ origset true
+ name Read6
+ tile_color 0x19ff1901
+ xpos -526
+ ypos -597
+}
+NoOp {
+ name Anchor_b8bba7822
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.anchorOnCreate()\n    except:\n        pass"
+ knobChanged stamps.anchorKnobChanged()
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0xffffff01
+ note_font_size 20
+ xpos -526
+ ypos -452
+ addUserKnob {20 anchor_tab l "Anchor Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T anchor}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 prev_name l "" +STARTLINE +HIDDEN T Anchor_b8bba7822}
+ addUserKnob {3 showing l "" +STARTLINE +HIDDEN}
+ addUserKnob {1 tags l Tags t "Comma-separated tags you can define for each Anchor, that will help you find it when invoking the Stamp Selector by pressing the Stamps shortkey with nothing selected."}
+ tags 2D,
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 createStamp l new t "Create a new Stamp for this Anchor." -STARTLINE T stamps.stampCreateWired(nuke.thisNode())}
+ addUserKnob {22 selectStamps l select t "Reconnect all of this Anchor's Stamps." -STARTLINE T stamps.wiredSelectSimilar(nuke.thisNode().name())}
+ addUserKnob {22 reconnectStamps l reconnect -STARTLINE T stamps.anchorReconnectWired()}
+ addUserKnob {22 zoomNext l "zoom next" t "Navigate to this Anchor's next Stamp on the Node Graph." -STARTLINE T stamps.wiredZoomNext(nuke.thisNode().name())}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+set N48b6d400 [stack 0]
+PostageStamp {
+ name Stamp1
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos -526
+ ypos -396
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+push $N48b6d400
+PostageStamp {
+ name Stamp3
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos 284
+ ypos 6
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+LayerContactSheet {
+ showLayerNames true
+ name LayerContactSheet1
+ xpos 284
+ ypos 70
+}
+push $N48b6d400
+PostageStamp {
+ name Stamp159
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos 151
+ ypos -120
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+add_layer {cryptomatte00 cryptomatte00.red cryptomatte00.green cryptomatte00.blue cryptomatte00.alpha}
+add_layer {cryptomatte01 cryptomatte01.red cryptomatte01.green cryptomatte01.blue cryptomatte01.alpha}
+add_layer {cryptomatte02 cryptomatte02.red cryptomatte02.green cryptomatte02.blue cryptomatte02.alpha}
+Cryptomatte {
+ name Cryptomatte40
+ xpos 151
+ ypos -48
+ matteOutput alpha
+ matteList "GEO_GRP/Solas_GRP/Armor_grp/wolf_pelt_grp/wolf_pelt_geo/wolf_pelt_geoShape, GEO_GRP/Solas_GRP/Solas_COL/wolfPelt_DES/wolf_pelt_geo_wolfPelt_DES/wolf_pelt_geo_wolfPelt_DESShape"
+ cryptoLayer cryptomatte
+ expression "((cryptomatte00.red == 8.44237893062e-26 || cryptomatte00.red == 213114784.0) ? cryptomatte00.green : 0.0) + ((cryptomatte00.blue == 8.44237893062e-26 || cryptomatte00.blue == 213114784.0) ? cryptomatte00.alpha : 0.0) + ((cryptomatte01.red == 8.44237893062e-26 || cryptomatte01.red == 213114784.0) ? cryptomatte01.green : 0.0) + ((cryptomatte01.blue == 8.44237893062e-26 || cryptomatte01.blue == 213114784.0) ? cryptomatte01.alpha : 0.0) + ((cryptomatte02.red == 8.44237893062e-26 || cryptomatte02.red == 213114784.0) ? cryptomatte02.green : 0.0) + ((cryptomatte02.blue == 8.44237893062e-26 || cryptomatte02.blue == 213114784.0) ? cryptomatte02.alpha : 0.0) + 0"
+ keyedName ""
+ previewExpression0 "((mantissa(abs(cryptomatte00.red)) * 1 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 1 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 1 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 1 % 0.25) * cryptomatte01.alpha)"
+ previewExpression1 "((mantissa(abs(cryptomatte00.red)) * 16 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 16 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 16 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 16 % 0.25) * cryptomatte01.alpha)"
+ previewExpression2 "((mantissa(abs(cryptomatte00.red)) * 64 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 64 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 64 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 64 % 0.25) * cryptomatte01.alpha)"
+ previewExpression3 ""
+ previewChannel none
+ in00 cryptomatte00
+ in01 cryptomatte01
+ in02 cryptomatte02
+ in03 none
+ in04 none
+ in05 none
+ in06 none
+ in07 none
+ in08 none
+ in09 none
+ in10 none
+ in11 none
+}
+push $N48b6d400
+PostageStamp {
+ name Stamp5
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos -336
+ ypos 519
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Cryptomatte {
+ name Cryptomatte3
+ xpos -336
+ ypos 591
+ matteOutput alpha
+ matteList GEO_GRP/Solas_GRP/Armor_grp/chestplate_geo/chestplate_geoShape
+ cryptoLayer cryptomatte
+ expression "((cryptomatte00.red == -1.09938200855e+21) ? cryptomatte00.green : 0.0) + ((cryptomatte00.blue == -1.09938200855e+21) ? cryptomatte00.alpha : 0.0) + ((cryptomatte01.red == -1.09938200855e+21) ? cryptomatte01.green : 0.0) + ((cryptomatte01.blue == -1.09938200855e+21) ? cryptomatte01.alpha : 0.0) + ((cryptomatte02.red == -1.09938200855e+21) ? cryptomatte02.green : 0.0) + ((cryptomatte02.blue == -1.09938200855e+21) ? cryptomatte02.alpha : 0.0) + 0"
+ keyedName ""
+ previewExpression0 "((mantissa(abs(cryptomatte00.red)) * 1 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 1 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 1 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 1 % 0.25) * cryptomatte01.alpha)"
+ previewExpression1 "((mantissa(abs(cryptomatte00.red)) * 16 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 16 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 16 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 16 % 0.25) * cryptomatte01.alpha)"
+ previewExpression2 "((mantissa(abs(cryptomatte00.red)) * 64 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 64 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 64 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 64 % 0.25) * cryptomatte01.alpha)"
+ previewExpression3 ""
+ previewChannel none
+ in00 cryptomatte00
+ in01 cryptomatte01
+ in02 cryptomatte02
+ in03 none
+ in04 none
+ in05 none
+ in06 none
+ in07 none
+ in08 none
+ in09 none
+ in10 none
+ in11 none
+}
+push $N48b6d400
+PostageStamp {
+ name Stamp4
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos -348
+ ypos 362
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Cryptomatte {
+ name Cryptomatte2
+ xpos -348
+ ypos 434
+ matteOutput alpha
+ matteList "GEO_GRP/Solas_GRP/Armor_grp/over_coat_grp/over_coat_geo/over_coat_geoShape, GEO_GRP/Solas_GRP/Armor_grp/under_coat_grp/under_coat_geo/under_coat_geoShape"
+ cryptoLayer cryptomatte
+ expression "((cryptomatte00.red == -9.42790826622e-37 || cryptomatte00.red == -4.37545806209e+32) ? cryptomatte00.green : 0.0) + ((cryptomatte00.blue == -9.42790826622e-37 || cryptomatte00.blue == -4.37545806209e+32) ? cryptomatte00.alpha : 0.0) + ((cryptomatte01.red == -9.42790826622e-37 || cryptomatte01.red == -4.37545806209e+32) ? cryptomatte01.green : 0.0) + ((cryptomatte01.blue == -9.42790826622e-37 || cryptomatte01.blue == -4.37545806209e+32) ? cryptomatte01.alpha : 0.0) + ((cryptomatte02.red == -9.42790826622e-37 || cryptomatte02.red == -4.37545806209e+32) ? cryptomatte02.green : 0.0) + ((cryptomatte02.blue == -9.42790826622e-37 || cryptomatte02.blue == -4.37545806209e+32) ? cryptomatte02.alpha : 0.0) + 0"
+ keyedName ""
+ previewExpression0 "((mantissa(abs(cryptomatte00.red)) * 1 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 1 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 1 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 1 % 0.25) * cryptomatte01.alpha)"
+ previewExpression1 "((mantissa(abs(cryptomatte00.red)) * 16 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 16 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 16 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 16 % 0.25) * cryptomatte01.alpha)"
+ previewExpression2 "((mantissa(abs(cryptomatte00.red)) * 64 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 64 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 64 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 64 % 0.25) * cryptomatte01.alpha)"
+ previewExpression3 ""
+ previewChannel none
+ in00 cryptomatte00
+ in01 cryptomatte01
+ in02 cryptomatte02
+ in03 none
+ in04 none
+ in05 none
+ in06 none
+ in07 none
+ in08 none
+ in09 none
+ in10 none
+ in11 none
+}
+Read {
+ inputs 0
+ file_type exr
+ file D:/Dropbox/VFX_PERSONAL_PROJECTS/frigate/shots/1010/3D/renders/v004/frigate_1010_lgt_v004_%04d.exr
+ format "1548 871 0 0 1548 871 1 "
+ first 1001
+ last 1095
+ origfirst 1001
+ origlast 1095
+ origset true
+ name Read2
+ tile_color 0x19ff1901
+ xpos 85
+ ypos -536
+}
+push $N48b6d400
+PostageStamp {
+ name Stamp2
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos -350
+ ypos -170
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Cryptomatte {
+ name Cryptomatte1
+ xpos -350
+ ypos -79
+ matteOutput alpha
+ matteList "GEO_GRP/Solas_GRP/Head_grp/eyes_grp/R_eye_grp/R_up_meniscus_geo/R_up_meniscus_geoShape, GEO_GRP/Solas_GRP/Head_grp/solas_head_geo/solas_head_geoShape, GEO_GRP/Solas_GRP/Solas_COL/brows_DES/brows_geo_brows_DES/brows_geo_brows_DESShape, GEO_GRP/Solas_GRP/Solas_COL/ears_DES/ears_geo_ears_DES/ears_geo_ears_DESShape, GEO_GRP/Solas_GRP/Solas_COL/lashes_DES/lashes_geo_lashes_DES/lashes_geo_lashes_DESShape, GEO_GRP/Solas_GRP/Solas_COL/lowerLashes_DES/lowerLashes_geo_lowerLashes_DES/lowerLashes_geo_lowerLashes_DESShape, GEO_GRP/Solas_GRP/Solas_COL/nostrils_DES/nostrils_geo_nostrils_DES/nostrils_geo_nostrils_DESShape, GEO_GRP/Solas_GRP/Solas_COL/vellus_DES/vellus_geo_vellus_DES/vellus_geo_vellus_DESShape"
+ cryptoLayer cryptomatte
+ expression "((cryptomatte00.red == 1.64806605755e+26 || cryptomatte00.red == 2.45265675059e+12 || cryptomatte00.red == -9.80498058183e-32 || cryptomatte00.red == -6.61602603431e+17 || cryptomatte00.red == 7.99539920896e+11 || cryptomatte00.red == -2.00147261089e+15 || cryptomatte00.red == -3.10461972293e+35 || cryptomatte00.red == -5.47523962778e-34) ? cryptomatte00.green : 0.0) + ((cryptomatte00.blue == 1.64806605755e+26 || cryptomatte00.blue == 2.45265675059e+12 || cryptomatte00.blue == -9.80498058183e-32 || cryptomatte00.blue == -6.61602603431e+17 || cryptomatte00.blue == 7.99539920896e+11 || cryptomatte00.blue == -2.00147261089e+15 || cryptomatte00.blue == -3.10461972293e+35 || cryptomatte00.blue == -5.47523962778e-34) ? cryptomatte00.alpha : 0.0) + ((cryptomatte01.red == 1.64806605755e+26 || cryptomatte01.red == 2.45265675059e+12 || cryptomatte01.red == -9.80498058183e-32 || cryptomatte01.red == -6.61602603431e+17 || cryptomatte01.red == 7.99539920896e+11 || cryptomatte01.red == -2.00147261089e+15 || cryptomatte01.red == -3.10461972293e+35 || cryptomatte01.red == -5.47523962778e-34) ? cryptomatte01.green : 0.0) + ((cryptomatte01.blue == 1.64806605755e+26 || cryptomatte01.blue == 2.45265675059e+12 || cryptomatte01.blue == -9.80498058183e-32 || cryptomatte01.blue == -6.61602603431e+17 || cryptomatte01.blue == 7.99539920896e+11 || cryptomatte01.blue == -2.00147261089e+15 || cryptomatte01.blue == -3.10461972293e+35 || cryptomatte01.blue == -5.47523962778e-34) ? cryptomatte01.alpha : 0.0) + ((cryptomatte02.red == 1.64806605755e+26 || cryptomatte02.red == 2.45265675059e+12 || cryptomatte02.red == -9.80498058183e-32 || cryptomatte02.red == -6.61602603431e+17 || cryptomatte02.red == 7.99539920896e+11 || cryptomatte02.red == -2.00147261089e+15 || cryptomatte02.red == -3.10461972293e+35 || cryptomatte02.red == -5.47523962778e-34) ? cryptomatte02.green : 0.0) + ((cryptomatte02.blue == 1.64806605755e+26 || cryptomatte02.blue == 2.45265675059e+12 || cryptomatte02.blue == -9.80498058183e-32 || cryptomatte02.blue == -6.61602603431e+17 || cryptomatte02.blue == 7.99539920896e+11 || cryptomatte02.blue == -2.00147261089e+15 || cryptomatte02.blue == -3.10461972293e+35 || cryptomatte02.blue == -5.47523962778e-34) ? cryptomatte02.alpha : 0.0) + 0"
+ keyedName ""
+ previewExpression0 "((mantissa(abs(cryptomatte00.red)) * 1 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 1 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 1 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 1 % 0.25) * cryptomatte01.alpha)"
+ previewExpression1 "((mantissa(abs(cryptomatte00.red)) * 16 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 16 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 16 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 16 % 0.25) * cryptomatte01.alpha)"
+ previewExpression2 "((mantissa(abs(cryptomatte00.red)) * 64 % 0.25) * cryptomatte00.green + (mantissa(abs(cryptomatte00.blue)) * 64 % 0.25) * cryptomatte00.alpha + (mantissa(abs(cryptomatte01.red)) * 64 % 0.25) * cryptomatte01.green + (mantissa(abs(cryptomatte01.blue)) * 64 % 0.25) * cryptomatte01.alpha)"
+ previewExpression3 ""
+ previewChannel none
+ in00 cryptomatte00
+ in01 cryptomatte01
+ in02 cryptomatte02
+ in03 none
+ in04 none
+ in05 none
+ in06 none
+ in07 none
+ in08 none
+ in09 none
+ in10 none
+ in11 none
+}
+Dot {
+ name Dot1
+ note_font "Verdana Bold"
+ note_font_size 30
+ xpos -316
+ ypos 19
+}
+push $N48b6d400
+PostageStamp {
+ name Stamp92
+ help "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021"
+ onCreate "if nuke.GUI:\n    try:\n        import stamps; stamps.wiredOnCreate()\n    except:\n        pass\n"
+ knobChanged "import stamps; stamps.wiredKnobChanged()"
+ autolabel "nuke.thisNode().knob(\"title\").value()"
+ tile_color 0x1000001
+ note_font Verdana
+ note_font_size 20
+ xpos -526
+ ypos -269
+ hide_input true
+ addUserKnob {20 wired_tab l "Wired Stamp"}
+ addUserKnob {26 identifier -STARTLINE +HIDDEN T wired}
+ addUserKnob {3 lockCallbacks l "" +STARTLINE +HIDDEN}
+ addUserKnob {6 toReconnect -STARTLINE +HIDDEN}
+ addUserKnob {1 title l Title: t "Displayed name on the Node Graph for this Stamp and its Anchor.\nIMPORTANT: This is only for display purposes, and is different from the real/internal name of the Stamps."}
+ title cg_render
+ addUserKnob {26 prev_title l "" +STARTLINE +HIDDEN T cg_render}
+ addUserKnob {26 tags l Tags: t "Tags of this stamp's Anchor, for information purpose only.\nClick \"show anchor\" to change them." T <i>2D</i>}
+ addUserKnob {26 backdrops l Backdrops: t "Labels of backdrop nodes which contain this stamp's Anchor." +HIDDEN T " "}
+ addUserKnob {26 line1 l "" +STARTLINE}
+ addUserKnob {6 postageStamp_show l "postage stamp" t "Enable the postage stamp thumbnail in this node.\nYou're seeing this because the class of this node includes the postage_stamp knob." +STARTLINE}
+ addUserKnob {26 anchor_label l Anchor: T " "}
+ addUserKnob {22 show_anchor l " show anchor " t "Show the properties panel for this Stamp's Anchor." -STARTLINE T stamps.wiredShowAnchor()}
+ addUserKnob {22 zoom_anchor l "zoom anchor" t "Navigate to this Stamp's Anchor on the Node Graph." -STARTLINE T stamps.wiredZoomAnchor()}
+ addUserKnob {26 stamps_label l Stamps: T " "}
+ addUserKnob {22 zoomNext l " zoom next " t "Navigate to this Stamp's next sibling on the Node Graph." -STARTLINE T stamps.wiredZoomNext()}
+ addUserKnob {22 selectSimilar l " select similar " t "Select all similar Stamps to this one on the Node Graph." -STARTLINE T stamps.wiredSelectSimilar()}
+ addUserKnob {26 space_1 l "" +STARTLINE T " "}
+ addUserKnob {26 reconnect_label l Reconnect: t "Reconnect by the stored Anchor name." T " "}
+ addUserKnob {22 reconnect_this l this t "Reconnect this Stamp to its Anchor, by its stored Anchor name." -STARTLINE T "n = nuke.thisNode()\ntry:\n    n.setInput(0,nuke.toNode(n.knob(\"anchor\").value()))\nexcept:\n    nuke.message(\"Unable to reconnect.\")\ntry:\n    import stamps\n    stamps.wiredGetStyle(n)\nexcept:\n    pass\n"}
+ addUserKnob {22 reconnect_similar l similar t "Reconnect this Stamp and similar ones to their Anchor, by their stored anchor name." -STARTLINE T stamps.wiredReconnectSimilar()}
+ addUserKnob {22 reconnect_all l all t "Reconnect all the Stamps to their Anchors, by their stored anchor names." -STARTLINE T stamps.wiredReconnectAll()}
+ addUserKnob {26 space_2 l "" +STARTLINE T " "}
+ addUserKnob {20 advanced_reconnection l "Advanced Reconnection" n 2}
+ addUserKnob {26 reconnect_by_title_label l "<font color=gold>By Title:" t "Reconnect by searching for a matching title." T " "}
+ addUserKnob {22 reconnect_by_title_this l this t "Look for an Anchor that shares this Stamp's title, and connect this Stamp to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitle()}
+ addUserKnob {22 reconnect_by_title_similar l similar t "Look for an Anchor that shares this Stamp's title, and connect this Stamp and similar ones to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSimilar()}
+ addUserKnob {22 reconnect_by_title_selected l selected t "For each Stamp selected, look for an Anchor that shares its title, and connect to it.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectByTitleSelected()}
+ addUserKnob {26 reconnect_by_selection_label l "<font color=orangered>By Selection:" t "Force reconnect to a selected Anchor." T " "}
+ addUserKnob {22 reconnect_by_selection_this l this t "Force reconnect this Stamp to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelection()}
+ addUserKnob {22 reconnect_by_selection_similar l similar t "Force reconnect this Stamp and similar ones to a selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSimilar()}
+ addUserKnob {22 reconnect_by_selection_selected l selected t "Force reconnect all selected Stamps to an also selected Anchor, whatever its name or title.\nIMPORTANT: Use this carefully, and only when the normal reconnection doesn't work." -STARTLINE T stamps.wiredReconnectBySelectionSelected()}
+ addUserKnob {1 anchor l Anchor}
+ anchor Anchor_b8bba7822
+ addUserKnob {6 auto_reconnect_by_title l "<font color=#ED9977>&nbsp; auto-reconnect by title" t "When creating this stamp again (like on copy-paste), auto-reconnect it by title instead of doing it by the saved anchor's name, and auto-turn this off immediately.\nIMPORTANT: Should be off by default. Only use this for setting up templates." +STARTLINE}
+ addUserKnob {26 line2 l "" +STARTLINE}
+ addUserKnob {22 buttonHelp l Help -STARTLINE T stamps.showHelp()}
+ addUserKnob {26 version l " " t "Stamps by Adrian Pueyo and Alexey Kuchinski.\nUpdated May 18 2021." -STARTLINE T "<a href=\"http://www.nukepedia.com/gizmos/other/stamps\" style=\"color:#666;text-decoration: none;\"><span style=\"color:#666\"> <big>Stamps v1.1</big></b></a>"}
+}
+Group {
+ name GradePass1
+ knobChanged "this_node = nuke.thisNode()\nthis_knob = nuke.thisKnob()\n\nif this_knob.name() in (\"viewer\"):\n    viewer = this_node\[\"viewer\"].getValue()\n    \n    with this_node:\n        switch_node = nuke.toNode(\"MainSwitch\")\n        switch_node\[\"which\"].setValue(viewer)\n\nif this_knob.name() in (\"disable_adjustments\"):\n    disable_check = this_node\[\"disable_adjustments\"].getValue()\n    disable_label = this_node\[\"label_disable_text\"]\n\n    if int(disable_check) == 1:\n        disable_label.setValue(\"<h3><font color='#CC3333'>ALL ADJUSTMENTS ARE DISABLED!\")\n    else:\n        disable_label.setValue(\"            \")\n\n"
+ tile_color 0x7697ffff
+ label "\[value in]"
+ note_font Verdana
+ selected true
+ xpos -526
+ ypos 9
+ addUserKnob {20 main_tab l Main}
+ addUserKnob {26 logo_1 l "" +STARTLINE T "\n<br><font size=7>  Grade<font color=\"#7A8EB3\"><font size=7><b>Pass</color><br>"}
+ addUserKnob {26 ""}
+ addUserKnob {41 in l "Select AOV" T MainShuffle.in}
+ addUserKnob {4 viewer l Viewer M {"Final Result" "Solo AOV" "All Layers" "" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {6 disable_adjustments l "Disable Adjustments" +STARTLINE}
+ addUserKnob {26 label_disable_text l "" -STARTLINE T "            "}
+ addUserKnob {26 text_1 l "" +STARTLINE T "      "}
+ addUserKnob {41 blackpoint T MainGrade.blackpoint}
+ addUserKnob {41 whitepoint T MainGrade.whitepoint}
+ addUserKnob {41 black l lift T MainGrade.black}
+ addUserKnob {41 white l gain T MainGrade.white}
+ addUserKnob {41 multiply T MainGrade.multiply}
+ addUserKnob {41 add l offset T MainGrade.add}
+ addUserKnob {41 gamma T MainGrade.gamma}
+ addUserKnob {26 text_2 l "" +STARTLINE T "    "}
+ addUserKnob {41 hue_rotation l "hue rotation" T HueShift1.hue_rotation}
+ addUserKnob {41 saturation T Saturation1.saturation}
+ addUserKnob {26 text l "" +STARTLINE T "       "}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T MainGrade.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T MainGrade.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T MainGrade.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T MainGrade.fringe}
+ addUserKnob {41 mix T Keymix1.mix}
+ addUserKnob {26 empty1 l "" +STARTLINE T " "}
+ addUserKnob {26 ""}
+ addUserKnob {26 credits l "" +STARTLINE T "Grade<b><font color=\"#7A8EB3\">Pass</font></b> v01.1 &copy; 2024</b>\n<p><font size=2>Danilo de Lucio | VFX Compositor & TD.</font>\n<br><a href=\"https://www.danilodelucio.com/\"><font color=\"#bbbbbb\" size=2>www.danilodelucio.com</a> - <a href=\"https://github.com/danilodelucio/NukeDiffusion\"><font color=\"#bbbbbb\" size=2>Github</a>"}
+ addUserKnob {20 about_tab l About}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "This node is designed to straightforwardly grade render passes using the subtractive method for AOV compositing.\n\nIt prioritizes performance and shareability, allowing users to copy and send it to others without needing to install anything.\n\nPlease note that it does not address NaN/Infinite values or perform complex calculations to fix AOV issues.\n\nFor more advanced control, such as combining AOVs, you will need to create them separately and then bring the combined AOV \n(for example, with a Copy node) so that you can select it from the dropdown menu.\n\nI hope you enjoy the tool!\n\n\nDanilo de Lucio | VFX Compositor & TD\nwww.danilodelucio.com\n"}
+ addUserKnob {26 ""}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -682
+  ypos -500
+ }
+ Dot {
+  name Dot150
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -648
+  ypos -390
+ }
+set N44ffc00 [stack 0]
+ Dot {
+  name Dot151
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos -390
+ }
+set N44ff800 [stack 0]
+ Dot {
+  name Dot1
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1458
+  ypos -390
+ }
+ LayerContactSheet {
+  center true
+  showLayerNames {{MainSwitch.which==2}}
+  name LayerContactSheet1
+  xpos -1492
+  ypos 126
+ }
+ Dot {
+  name Dot3
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1458
+  ypos 440
+ }
+push $N44ff800
+ Shuffle1 {
+  in none
+  name MainShuffle
+  label "\[value in]"
+  xpos -1007
+  ypos -329
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle1
+  label "\[value in1]"
+  xpos -1007
+  ypos -261
+ }
+ Dot {
+  name Dot148
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos -175
+ }
+set N44fe000 [stack 0]
+ Dot {
+  name Dot5
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -839
+  ypos 121
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -1087
+  ypos -131
+  number 1
+ }
+ Dot {
+  name Dot8
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1053
+  ypos -75
+ }
+set N4521400 [stack 0]
+ Dot {
+  name Dot6
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1053
+  ypos -18
+ }
+set N4521000 [stack 0]
+ Dot {
+  name Dot7
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1053
+  ypos 33
+ }
+push $N4521000
+push $N4521400
+push $N44fe000
+ Dot {
+  name Dot2
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1246
+  ypos -175
+ }
+ Grade {
+  inputs 1+1
+  name MainGrade
+  xpos -1280
+  ypos -78
+  disable {{parent.disable_adjustments}}
+ }
+ Saturation {
+  inputs 1+1
+  name Saturation1
+  xpos -1280
+  ypos -22
+  disable {{parent.disable_adjustments}}
+ }
+ HueShift {
+  inputs 1+1
+  name HueShift1
+  xpos -1280
+  ypos 29
+  disable {{parent.disable_adjustments}}
+ }
+ Dot {
+  name Dot4
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1246
+  ypos 121
+ }
+push $N44fe000
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -1007
+  ypos 111
+ }
+ Dot {
+  name Dot149
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos 253
+ }
+set N4543000 [stack 0]
+push $N4543000
+push $N44fe000
+push $N44ffc00
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge_FROM
+  xpos -682
+  ypos -179
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge_PLUS
+  xpos -682
+  ypos 249
+ }
+set N4542800 [stack 0]
+ Switch {
+  inputs 3
+  name MainSwitch
+  xpos -682
+  ypos 436
+ }
+ Output {
+  name Output1
+  xpos -682
+  ypos 573
+ }
+push $N4542800
+ Viewer {
+  frame_range 1001-1095
+  fps 23.97602463
+  viewerProcess "sRGB (ACES)"
+  name Viewer1
+  xpos -487
+  ypos 350
+ }
+end_group
+set N48ba7600 [stack 0]
+Chromatik {
+ name Chromatik
+ xpos -526
+ ypos 664
+ center {1810 1990}
+ Multiplier 15
+}
+Glow_Exponential {
+ name Glow_Exponential
+ xpos -526
+ ypos 732
+ size 18
+ intensity 0.32
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ label "n = nuke.thisNode()\nviewer = n\[\"viewer\"].getValue()\n\nwith n:\n    switch_node = nuke.toNode(\"MainSwitch\")\n    switch_node\[\"which\"].setValue(viewer)"
+ note_font "Verdana Bold"
+ note_font_size 30
+ xpos -1845
+ ypos -331
+}
+Read {
+ inputs 0
+ file_type jpeg
+ file "D:/Dropbox/DL/PICTURES PROFILE/DSC03548 v03 (Large).jpg"
+ format "1919 1080 0 0 1919 1080 1 "
+ origset true
+ name Read1
+ tile_color 0x19ff1901
+ xpos 286
+ ypos -565
+}
+LayerContactSheet {
+ showLayerNames true
+ name LayerContactSheet2
+ xpos 286
+ ypos -428
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ label "<h3><font color=\"#CC3333\">ALL ADJUSTMENTS ARE DISABLED!"
+ note_font "Verdana Bold"
+ note_font_size 30
+ xpos -1843
+ ypos -46
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ label "7A8EB3\nR: 122\nG: 142\nB: 179"
+ note_font "Verdana Bold"
+ note_font_size 30
+ xpos -991
+ ypos -444
+}
+add_layer {LGT_GlossCol LGT_GlossCol.red LGT_GlossCol.green LGT_GlossCol.blue}
+add_layer {LGT_GlossDir LGT_GlossDir.red LGT_GlossDir.green LGT_GlossDir.blue}
+add_layer {LGT_GlossInd LGT_GlossInd.red LGT_GlossInd.green LGT_GlossInd.blue}
+Group {
+ inputs 0
+ name GradePass_bkp_v2
+ knobChanged "def setShuffle(shuffle_value):\n    with this_node:\n        shuffle = nuke.toNode(\"MainShuffle\")\n        shuffle\[\"in\"].setValue(shuffle_value)\n\nthis_node = nuke.thisNode()\nthis_knob = nuke.thisKnob()\n\nif this_knob.name() in (\"viewer\"):\n    viewer = this_node\[\"viewer\"].getValue()\n    \n    with this_node:\n        switch_node = nuke.toNode(\"MainSwitch\")\n        switch_node\[\"which\"].setValue(viewer)\n\nif this_knob.name() in (\"disable_adjustments\"):\n    disable_check = this_node\[\"disable_adjustments\"].getValue()\n    disable_label = this_node\[\"label_disable_text\"]\n\n    if int(disable_check) == 1:\n        disable_label.setValue(\"<h3><font color='#CC3333'>ALL ADJUSTMENTS ARE DISABLED!\")\n    else:\n        disable_label.setValue(\"            \")\n\nif this_knob.name() in (\"select_aov\"):\n    aov = this_node\[\"select_aov\"].value()\n\n    setShuffle(aov)\n"
+ tile_color 0x7697ffff
+ label "\[value in]"
+ note_font Verdana
+ xpos -1010
+ ypos 80
+ addUserKnob {20 main_tab l Main}
+ addUserKnob {26 logo_1 l "" +STARTLINE T "\n<br><font size=7>  Grade<font color=\"#7A8EB3\"><font size=7><b>Pass</color><br>"}
+ addUserKnob {26 ""}
+ addUserKnob {4 select_aov l "Select AOV" +INVISIBLE M {LGT_Emit LGT_Mist LGT_GlossInd LGT_Combined LGT_DiffInd Composite_Combined rgba LGT_DiffDir LGT_DiffCol LGT_Noisy_Image LGT_CryptoObject01 LGT_AO LGT_GlossCol LGT_CryptoMaterial01 LGT_GlossDir}}
+ select_aov LGT_Mist
+ addUserKnob {22 load_aovs l "Load AOVs Input" -STARTLINE +INVISIBLE T "def setShuffle(shuffle_value):\n    with this_node:\n        shuffle = nuke.toNode(\"MainShuffle\")\n        shuffle\[\"in\"].setValue(shuffle_value)\n\nthis_node = nuke.thisNode()\ninput_node = this_node.input(0)\n\nif input_node:\n    # Storing all the channels\n    channels = input_node.channels()\n\n    extra_passes = \[\"crypto\", \"normal\", \"vector\", \"depth\", \"uv\", \"position\", \"pref\", \"worldPosition\"]\n    subchannels_list = \[\".red\", \".green\", \".blue\", \".alpha\"]\n\n    light_passes = list(set(\[c.split('.')\[0] for c in channels]))\n\n    for ep in extra_passes:\n        for lp in light_passes:\n            if ep in lp.lower():\n                light_passes.remove(lp)\n\n    print(light_passes)\n\n    if len(light_passes) > 1:\n        this_node\[\"select_aov\"].setValues(light_passes)\n        this_node\[\"select_aov\"].setValue(0)\n\n        setShuffle(light_passes\[0])        \n\n        print(\"- \" + str(len(light_passes)) + \" Light passes have been loaded!\")\n    else:\n        this_node\[\"select_aov\"].setValues(\[\"none\"])\n\n        setShuffle(\"rgb\")\n\n        print(\"- RGB passes not found!\")\n"}
+ addUserKnob {26 text l "" -STARTLINE +INVISIBLE T "<i>Only Light passes will be displayed."}
+ addUserKnob {41 in l "Select AOV" T MainShuffle.in}
+ addUserKnob {4 viewer l Viewer M {"Final Result" "Solo AOV" "All Layers" "" "" ""}}
+ addUserKnob {6 nan_values l "NaN Values" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 disable_adjustments l "Disable Adjustments" +STARTLINE}
+ addUserKnob {26 label_disable_text l "" -STARTLINE T "            "}
+ addUserKnob {26 text_1 l "" +STARTLINE T "      "}
+ addUserKnob {41 saturation T Saturation1.saturation}
+ addUserKnob {41 blackpoint T MainGrade.blackpoint}
+ addUserKnob {41 whitepoint T MainGrade.whitepoint}
+ addUserKnob {41 black l lift T MainGrade.black}
+ addUserKnob {41 white l gain T MainGrade.white}
+ addUserKnob {41 multiply T MainGrade.multiply}
+ addUserKnob {41 add l offset T MainGrade.add}
+ addUserKnob {41 gamma T MainGrade.gamma}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T MainGrade.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T MainGrade.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T MainGrade.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T MainGrade.fringe}
+ addUserKnob {41 mix T Keymix1.mix}
+ addUserKnob {26 empty1 l "" +STARTLINE T " "}
+ addUserKnob {26 ""}
+ addUserKnob {26 credits l "" +STARTLINE T "Grade<b><font color=\"#7A8EB3\">Pass</font></b> v01.1 &copy; 2024</b>\n<p><font size=2>Danilo de Lucio | VFX Compositor & TD.</font>\n<br><a href=\"https://www.danilodelucio.com/\"><font color=\"#bbbbbb\" size=2>www.danilodelucio.com</a> - <a href=\"https://github.com/danilodelucio/NukeDiffusion\"><font color=\"#bbbbbb\" size=2>Github</a>"}
+ addUserKnob {20 advanced_tab l Advanced}
+ addUserKnob {26 text_2 l "" +STARTLINE T "Here you can combine some AOVs based on the Render engine used.\n\nAll the setup below was done by following its documentation.\n\n"}
+ addUserKnob {26 text_3 l "" +STARTLINE T "          "}
+ addUserKnob {20 blender_cycles_group l "Blender (Cycles) - Diffuse/Reflection/Transmission" n 1}
+ addUserKnob {41 blender_cycles_direct l Direct T Blender_Cycles_Direct.in}
+ addUserKnob {41 blender_cycles_indirect l Indirect T Blender_Cycles_Indirect.in}
+ addUserKnob {41 blender_cycles_color l Color T Blender_Cycles_Color.in}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 text_4 l "" +STARTLINE T "     "}
+ addUserKnob {20 blender_eevee_group l "Blender (Eevee) - Diffuse/Specular" n 1}
+ addUserKnob {41 blender_eevee_light l Light T Blender_Eevee_Light.in}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {41 blender_eevee_color l Color T Blender_Eevee_Color.in}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -682
+  ypos -961
+ }
+set N48d8000 [stack 0]
+ Dot {
+  name Dot150
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -648
+  ypos -444
+ }
+set N48fdc00 [stack 0]
+ Dot {
+  name Dot151
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos -444
+ }
+set N48fd800 [stack 0]
+ Dot {
+  name Dot1
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1458
+  ypos -444
+ }
+ LayerContactSheet {
+  center true
+  showLayerNames {{MainSwitch.which==2}}
+  name LayerContactSheet1
+  xpos -1492
+  ypos 126
+ }
+ Dot {
+  name Dot3
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1458
+  ypos 440
+ }
+push $N48d8000
+ Dot {
+  name Dot6
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1146
+  ypos -957
+ }
+set N48fc800 [stack 0]
+ Dot {
+  name Dot7
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1315
+  ypos -957
+ }
+set N48fc400 [stack 0]
+ Dot {
+  name Dot8
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1499
+  ypos -957
+ }
+set N48fc000 [stack 0]
+ Dot {
+  name Dot11
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1765
+  ypos -957
+ }
+set N5937c00 [stack 0]
+ Dot {
+  name Dot12
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1934
+  ypos -957
+ }
+ Shuffle1 {
+  in LGT_GlossDir
+  name Blender_Eevee_Light
+  xpos -1968
+  ypos -882
+ }
+push $N5937c00
+ Shuffle1 {
+  in LGT_GlossInd
+  name Blender_Eevee_Color
+  xpos -1799
+  ypos -884
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge3
+  xpos -1874
+  ypos -810
+ }
+ Dot {
+  name Dot15
+  label " BLENDER EEVEE"
+  note_font "Verdana Bold"
+  note_font_size 20
+  xpos -1840
+  ypos -673
+ }
+push $N48fc000
+ Shuffle1 {
+  in LGT_GlossCol
+  name Blender_Cycles_Color
+  xpos -1533
+  ypos -866
+ }
+ Dot {
+  name Dot9
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1499
+  ypos -735
+ }
+push $N48fc400
+ Shuffle1 {
+  in LGT_GlossDir
+  name Blender_Cycles_Direct
+  xpos -1349
+  ypos -882
+ }
+push $N48fc800
+ Shuffle1 {
+  in LGT_GlossInd
+  name Blender_Cycles_Indirect
+  xpos -1180
+  ypos -884
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos -1255
+  ypos -810
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge2
+  xpos -1255
+  ypos -739
+ }
+ Dot {
+  name Dot10
+  label " BLENDER CYCLES"
+  note_font "Verdana Bold"
+  note_font_size 20
+  xpos -1221
+  ypos -673
+ }
+push $N48fd800
+ Shuffle1 {
+  in LGT_GlossCol
+  name MainShuffle
+  label "\[value in]"
+  xpos -1007
+  ypos -383
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle1
+  label "\[value in1]"
+  xpos -1007
+  ypos -315
+ }
+ Switch {
+  inputs 3
+  name Switch1
+  xpos -1007
+  ypos -217
+ }
+ Dot {
+  name Dot148
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos -131
+ }
+set N598dc00 [stack 0]
+ Dot {
+  name Dot5
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -839
+  ypos 71
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -1105
+  ypos -56
+  number 1
+ }
+set N598d400 [stack 0]
+push $N598d400
+push $N598dc00
+ Dot {
+  name Dot2
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1224
+  ypos -131
+ }
+ Grade {
+  inputs 1+1
+  white 2.06
+  name MainGrade
+  xpos -1258
+  ypos -56
+  disable {{parent.disable_adjustments}}
+ }
+ Saturation {
+  inputs 1+1
+  name Saturation1
+  xpos -1258
+  disable {{parent.disable_adjustments}}
+ }
+ Dot {
+  name Dot4
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1224
+  ypos 71
+ }
+push $N598dc00
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -1007
+  ypos 61
+ }
+ Expression {
+  expr0 isnan(r)?r(x+1,y):r
+  expr1 isnan(g)?r(x+1,y):g
+  expr2 isnan(b)?r(x+1,y):b
+  expr3 isnan(a)?r(x+1,y):a
+  name NaN
+  xpos -1007
+  ypos 139
+  disable {{1-parent.nan_values}}
+ }
+ Dot {
+  name Dot149
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos 203
+ }
+set N59af800 [stack 0]
+push $N59af800
+push $N598dc00
+push $N48fdc00
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge_FROM
+  xpos -682
+  ypos -135
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge_PLUS
+  xpos -682
+  ypos 199
+ }
+set N59af000 [stack 0]
+ Switch {
+  inputs 3
+  name MainSwitch
+  xpos -682
+  ypos 436
+ }
+ Output {
+  name Output1
+  xpos -682
+  ypos 573
+ }
+push $N59af000
+ Viewer {
+  frame_range 1001-1095
+  fps 23.97602463
+  viewerProcess "sRGB (ACES)"
+  name Viewer1
+  xpos -487
+  ypos 350
+ }
+end_group
+add_layer {LGT_Depth LGT_Depth.Z}
+Shuffle2 {
+ inputs 0
+ fromInput1 {{0} B}
+ in1 LGT_Depth
+ fromInput2 {{0} B}
+ mappings "4 LGT_Depth.Z 0 0 rgba.green 0 1 LGT_Depth.Z 0 0 rgba.red 0 0 LGT_Depth.Z 0 0 rgba.blue 0 2 LGT_Depth.Z 0 0 rgba.alpha 0 3"
+ name Shuffle1
+ label "\[value in1]"
+ xpos 620
+ ypos -240
+}
+Shuffle1 {
+ inputs 0
+ in LGT_Depth
+ name Shuffle2
+ label "\[value in1]"
+ xpos 485
+ ypos -237
+}
+push $N48ba7600
+Viewer {
+ frame_range 1001-1095
+ fps 23.97602463
+ viewerProcess "sRGB (ACES)"
+ name Viewer1
+ xpos -628
+ ypos 134
+}
+Grade {
+ inputs 0
+ name Grade1
+ xpos -738
+ ypos -11
+}

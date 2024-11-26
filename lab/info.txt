@@ -1,0 +1,19 @@
+In some cases, to get the final Diffuse, Reflection and so on, you need to combine them separately, then create a new channel and bring them back to the pipe.
+
+For Octane Render, Redshift, V-ray and Arnold, you can pick the desired AOV directly in the Main tab. At the moment, the only setup you can get the final Diffuse, Reflection
+
+
+------
+
+This node is designed to straightforwardly grade render passes using the subtractive method for AOV compositing.
+
+It prioritizes performance and shareability, allowing users to copy and send it to others without needing to install anything.
+
+Please note that it does not address NaN/Infinite values or perform complex calculations to fix AOV issues.
+
+For more advanced control, such as combining AOVs, you will need to create them separately and then bring the combined AOV (for example, with a Copy node) so that you can select it from the dropdown menu.
+
+
+I hope you enjoy the tool!
+
+Danilo de Lucio | VFX Compositor & TD

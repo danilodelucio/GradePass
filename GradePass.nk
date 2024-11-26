@@ -1,0 +1,243 @@
+set cut_paste_input [stack 0]
+version 12.1 v5
+push $cut_paste_input
+Group {
+ name GradePass1
+ knobChanged "this_node = nuke.thisNode()\nthis_knob = nuke.thisKnob()\n\nif this_knob.name() in (\"viewer\"):\n    viewer = this_node\[\"viewer\"].getValue()\n    \n    with this_node:\n        switch_node = nuke.toNode(\"MainSwitch\")\n        switch_node\[\"which\"].setValue(viewer)\n\nif this_knob.name() in (\"disable_adjustments\"):\n    disable_check = this_node\[\"disable_adjustments\"].getValue()\n    disable_label = this_node\[\"label_disable_text\"]\n\n    if int(disable_check) == 1:\n        disable_label.setValue(\"<h3><font color='#CC3333'>ALL ADJUSTMENTS ARE DISABLED!\")\n    else:\n        disable_label.setValue(\"            \")\n\n"
+ tile_color 0x7697ffff
+ label "\[value in]"
+ note_font Verdana
+ selected true
+ xpos -526
+ ypos 9
+ addUserKnob {20 main_tab l Main}
+ addUserKnob {26 logo_1 l "" +STARTLINE T "\n<br><font size=7>  Grade<font color=\"#7A8EB3\"><font size=7><b>Pass</color><br>"}
+ addUserKnob {26 ""}
+ addUserKnob {41 in l "Select AOV" T MainShuffle.in}
+ addUserKnob {4 viewer l Viewer M {"Final Result" "Solo AOV" "All Layers" "" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {6 disable_adjustments l "Disable Adjustments" +STARTLINE}
+ addUserKnob {26 label_disable_text l "" -STARTLINE T "            "}
+ addUserKnob {26 text_1 l "" +STARTLINE T "      "}
+ addUserKnob {41 blackpoint T MainGrade.blackpoint}
+ addUserKnob {41 whitepoint T MainGrade.whitepoint}
+ addUserKnob {41 black l lift T MainGrade.black}
+ addUserKnob {41 white l gain T MainGrade.white}
+ addUserKnob {41 multiply T MainGrade.multiply}
+ addUserKnob {41 add l offset T MainGrade.add}
+ addUserKnob {41 gamma T MainGrade.gamma}
+ addUserKnob {26 text_2 l "" +STARTLINE T "    "}
+ addUserKnob {41 hue_rotation l "hue rotation" T HueShift1.hue_rotation}
+ addUserKnob {41 saturation T Saturation1.saturation}
+ addUserKnob {26 text l "" +STARTLINE T "       "}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T MainGrade.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T MainGrade.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T MainGrade.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T MainGrade.fringe}
+ addUserKnob {41 mix T Keymix1.mix}
+ addUserKnob {26 empty1 l "" +STARTLINE T " "}
+ addUserKnob {26 ""}
+ addUserKnob {26 credits l "" +STARTLINE T "Grade<b><font color=\"#7A8EB3\">Pass</font></b> v01.1 &copy; 2024</b>\n<p><font size=2>Danilo de Lucio | VFX Compositor & TD.</font>\n<br><a href=\"https://www.danilodelucio.com/\"><font color=\"#bbbbbb\" size=2>www.danilodelucio.com</a> - <a href=\"https://github.com/danilodelucio/NukeDiffusion\"><font color=\"#bbbbbb\" size=2>Github</a>"}
+ addUserKnob {20 about_tab l About}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "This node is designed to straightforwardly grade render passes using the subtractive method for AOV compositing.\n\nIt prioritizes performance and shareability, allowing users to copy and send it to others without needing to install anything.\n\nPlease note that it does not address NaN/Infinite values or perform complex calculations to fix AOV issues.\n\nFor more advanced control, such as combining AOVs, you will need to create them separately and then bring the combined AOV \n(for example, with a Copy node) so that you can select it from the dropdown menu.\n\nI hope you enjoy the tool!\n\n\nDanilo de Lucio | VFX Compositor & TD\nwww.danilodelucio.com\n"}
+ addUserKnob {26 ""}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -682
+  ypos -500
+ }
+ Dot {
+  name Dot150
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -648
+  ypos -390
+ }
+set N44ffc00 [stack 0]
+ Dot {
+  name Dot151
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos -390
+ }
+set N44ff800 [stack 0]
+ Dot {
+  name Dot1
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1458
+  ypos -390
+ }
+ LayerContactSheet {
+  center true
+  showLayerNames {{MainSwitch.which==2}}
+  name LayerContactSheet1
+  xpos -1492
+  ypos 126
+ }
+ Dot {
+  name Dot3
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1458
+  ypos 440
+ }
+push $N44ff800
+ Shuffle1 {
+  in none
+  name MainShuffle
+  label "\[value in]"
+  xpos -1007
+  ypos -329
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle1
+  label "\[value in1]"
+  xpos -1007
+  ypos -261
+ }
+ Dot {
+  name Dot148
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos -175
+ }
+set N44fe000 [stack 0]
+ Dot {
+  name Dot5
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -839
+  ypos 121
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -1087
+  ypos -131
+  number 1
+ }
+ Dot {
+  name Dot8
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1053
+  ypos -75
+ }
+set N4521400 [stack 0]
+ Dot {
+  name Dot6
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1053
+  ypos -18
+ }
+set N4521000 [stack 0]
+ Dot {
+  name Dot7
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1053
+  ypos 33
+ }
+push $N4521000
+push $N4521400
+push $N44fe000
+ Dot {
+  name Dot2
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1246
+  ypos -175
+ }
+ Grade {
+  inputs 1+1
+  name MainGrade
+  xpos -1280
+  ypos -78
+  disable {{parent.disable_adjustments}}
+ }
+ Saturation {
+  inputs 1+1
+  name Saturation1
+  xpos -1280
+  ypos -22
+  disable {{parent.disable_adjustments}}
+ }
+ HueShift {
+  inputs 1+1
+  name HueShift1
+  xpos -1280
+  ypos 29
+  disable {{parent.disable_adjustments}}
+ }
+ Dot {
+  name Dot4
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -1246
+  ypos 121
+ }
+push $N44fe000
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -1007
+  ypos 111
+ }
+ Dot {
+  name Dot149
+  note_font "Verdana Bold"
+  note_font_size 30
+  xpos -973
+  ypos 253
+ }
+set N4543000 [stack 0]
+push $N4543000
+push $N44fe000
+push $N44ffc00
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge_FROM
+  xpos -682
+  ypos -179
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge_PLUS
+  xpos -682
+  ypos 249
+ }
+set N4542800 [stack 0]
+ Switch {
+  inputs 3
+  name MainSwitch
+  xpos -682
+  ypos 436
+ }
+ Output {
+  name Output1
+  xpos -682
+  ypos 573
+ }
+push $N4542800
+ Viewer {
+  frame_range 1001-1095
+  fps 23.97602463
+  viewerProcess "sRGB (ACES)"
+  name Viewer1
+  xpos -487
+  ypos 350
+ }
+end_group
