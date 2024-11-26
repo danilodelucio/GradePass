@@ -1,5 +1,4 @@
 set cut_paste_input [stack 0]
-version 12.1 v5
 push $cut_paste_input
 Group {
  name GradePass1
@@ -9,7 +8,7 @@ Group {
  note_font Verdana
  selected true
  xpos -526
- ypos 9
+ ypos 8
  addUserKnob {20 main_tab l Main}
  addUserKnob {26 logo_1 l "" +STARTLINE T "\n<br><font size=7>  Grade<font color=\"#7A8EB3\"><font size=7><b>Pass</color><br>"}
  addUserKnob {26 ""}
@@ -38,7 +37,7 @@ Group {
  addUserKnob {41 mix T Keymix1.mix}
  addUserKnob {26 empty1 l "" +STARTLINE T " "}
  addUserKnob {26 ""}
- addUserKnob {26 credits l "" +STARTLINE T "Grade<b><font color=\"#7A8EB3\">Pass</font></b> v01.1 &copy; 2024</b>\n<p><font size=2>Danilo de Lucio | VFX Compositor & TD.</font>\n<br><a href=\"https://www.danilodelucio.com/\"><font color=\"#bbbbbb\" size=2>www.danilodelucio.com</a> - <a href=\"https://github.com/danilodelucio/NukeDiffusion\"><font color=\"#bbbbbb\" size=2>Github</a>"}
+ addUserKnob {26 credits l "" +STARTLINE T "Grade<b><font color=\"#7A8EB3\">Pass</font></b> v01.1 &copy; 2024</b>\n<p><font size=2>Danilo de Lucio | VFX Compositor & TD.</font>\n<br><a href=\"https://www.danilodelucio.com/\"><font color=\"#bbbbbb\" size=2>www.danilodelucio.com</a> - <a href=\"https://github.com/danilodelucio/GradePass\"><font color=\"#bbbbbb\" size=2>Github</a>"}
  addUserKnob {20 about_tab l About}
  addUserKnob {26 ""}
  addUserKnob {26 text_3 l "" +STARTLINE T "This node is designed to straightforwardly grade render passes using the subtractive method for AOV compositing.\n\nIt prioritizes performance and shareability, allowing users to copy and send it to others without needing to install anything.\n\nPlease note that it does not address NaN/Infinite values or perform complex calculations to fix AOV issues.\n\nFor more advanced control, such as combining AOVs, you will need to create them separately and then bring the combined AOV \n(for example, with a Copy node) so that you can select it from the dropdown menu.\n\nI hope you enjoy the tool!\n\n\nDanilo de Lucio | VFX Compositor & TD\nwww.danilodelucio.com\n"}
@@ -57,7 +56,7 @@ Group {
   xpos -648
   ypos -390
  }
-set N44ffc00 [stack 0]
+set Nbc04fc00 [stack 0]
  Dot {
   name Dot151
   note_font "Verdana Bold"
@@ -65,7 +64,7 @@ set N44ffc00 [stack 0]
   xpos -973
   ypos -390
  }
-set N44ff800 [stack 0]
+set Nbc04f800 [stack 0]
  Dot {
   name Dot1
   note_font "Verdana Bold"
@@ -77,6 +76,7 @@ set N44ff800 [stack 0]
   center true
   showLayerNames {{MainSwitch.which==2}}
   name LayerContactSheet1
+  selected true
   xpos -1492
   ypos 126
  }
@@ -87,7 +87,7 @@ set N44ff800 [stack 0]
   xpos -1458
   ypos 440
  }
-push $N44ff800
+push $Nbc04f800
  Shuffle1 {
   in none
   name MainShuffle
@@ -111,7 +111,7 @@ push $N44ff800
   xpos -973
   ypos -175
  }
-set N44fe000 [stack 0]
+set Nbc04e000 [stack 0]
  Dot {
   name Dot5
   note_font "Verdana Bold"
@@ -133,7 +133,7 @@ set N44fe000 [stack 0]
   xpos -1053
   ypos -75
  }
-set N4521400 [stack 0]
+set Nbc071400 [stack 0]
  Dot {
   name Dot6
   note_font "Verdana Bold"
@@ -141,7 +141,7 @@ set N4521400 [stack 0]
   xpos -1053
   ypos -18
  }
-set N4521000 [stack 0]
+set Nbc071000 [stack 0]
  Dot {
   name Dot7
   note_font "Verdana Bold"
@@ -149,9 +149,9 @@ set N4521000 [stack 0]
   xpos -1053
   ypos 33
  }
-push $N4521000
-push $N4521400
-push $N44fe000
+push $Nbc071000
+push $Nbc071400
+push $Nbc04e000
  Dot {
   name Dot2
   note_font "Verdana Bold"
@@ -187,7 +187,7 @@ push $N44fe000
   xpos -1246
   ypos 121
  }
-push $N44fe000
+push $Nbc04e000
  Keymix {
   inputs 3
   name Keymix1
@@ -201,10 +201,10 @@ push $N44fe000
   xpos -973
   ypos 253
  }
-set N4543000 [stack 0]
-push $N4543000
-push $N44fe000
-push $N44ffc00
+set Nbc093000 [stack 0]
+push $Nbc093000
+push $Nbc04e000
+push $Nbc04fc00
  Merge2 {
   inputs 2
   operation from
@@ -219,7 +219,7 @@ push $N44ffc00
   xpos -682
   ypos 249
  }
-set N4542800 [stack 0]
+set Nbc092800 [stack 0]
  Switch {
   inputs 3
   name MainSwitch
@@ -231,7 +231,7 @@ set N4542800 [stack 0]
   xpos -682
   ypos 573
  }
-push $N4542800
+push $Nbc092800
  Viewer {
   frame_range 1001-1095
   fps 23.97602463
