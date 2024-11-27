@@ -1,13 +1,13 @@
-![cover v1](https://github.com/user-attachments/assets/e0ea7109-09b0-48e3-a1ea-9b18cefae33c)
+![cover_v3](https://github.com/user-attachments/assets/f1aed0c8-9be7-4b5d-9039-74f858bee725)
 
-Artwork [Solas (Dragon Age)](https://www.artstation.com/artwork/P66RP8), by [Leticia Matsuoka](https://leticiamatsuoka.com/).
+_Artwork [Solas (Dragon Age)](https://www.artstation.com/artwork/P66RP8), by [Leticia Matsuoka](https://leticiamatsuoka.com/)._
 
 # Introduction
 The GradePass node is designed to grade render passes directly. It uses the subtractive method for AOVs without the need to extract them.
 
 It contains the same knobs as the Grade node, along with Hue Rotation, Saturation and some extra features.
 
-![GradePass_vs_Grade_v1](https://github.com/user-attachments/assets/cc8ec0aa-d94b-46e3-b95a-605b93b9b314)
+![Screenshot 2024-11-26 203647](https://github.com/user-attachments/assets/44bfe902-7b61-4f73-a59e-9fa0efec1c69)
 
 # Viewer
 
