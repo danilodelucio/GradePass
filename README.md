@@ -2,12 +2,28 @@
 
 > _Artwork [Solas (Dragon Age)](https://www.artstation.com/artwork/P66RP8), by [Leticia Matsuoka](https://leticiamatsuoka.com/)._
 
+# Quick Access 🔗
+- [Introduction](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#introduction-)
+- [Nuke Compatibility](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#nuke-compatibility-%EF%B8%8F)
+- [Troubleshooting](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#troubleshooting-%EF%B8%8F)
+- [Support me](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#support-me-)
+
+---
+
 # Introduction 📝
 The **GradePass** node is designed to grade render passes directly without the need to extract them. It uses the subtractive method, and you can view and tweak the selected AOV in one single node.
 
 It contains the same knobs as the Grade node, along with Hue Rotation, Saturation and some extra features.
 
 ![Screenshot 2024-11-26 203647](https://github.com/user-attachments/assets/44bfe902-7b61-4f73-a59e-9fa0efec1c69)
+
+# How to Use 📖
+
+<h2>Viewer - Final Result</h2>
+
+- It allows you to check the final result while you adjust the selected AOV;
+
+![final_result_v1_](https://github.com/user-attachments/assets/8d15b4f2-42ff-4564-b049-a703e5471a7b)
 
 <h2>Viewer - Solo AOV</h2>
 
@@ -25,13 +41,7 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 ![final_result_v1_](https://github.com/user-attachments/assets/4879331f-abb0-4fce-9622-f69b4e8715c2)
 
-<h2>Viewer - Final Result</h2>
-
-- It allows you to check the final result while you adjust the selected AOV;
-
-![final_result_v1_](https://github.com/user-attachments/assets/8d15b4f2-42ff-4564-b049-a703e5471a7b)
-
-- You can stack the GradePass nodes with all the AOV changes you have done;
+- You can stack the **GradePass** nodes with all the AOV changes you have done;
 
 ![stack_v1_](https://github.com/user-attachments/assets/983e4494-feaa-4ac1-944e-8b1d7d055223)
 
