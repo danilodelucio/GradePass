@@ -1,3 +1,5 @@
+![cover v1](https://github.com/user-attachments/assets/e0ea7109-09b0-48e3-a1ea-9b18cefae33c)
+
 Artwork [Solas (Dragon Age)](https://www.artstation.com/artwork/P66RP8), by [Leticia Matsuoka](https://leticiamatsuoka.com/).
 
 # Introduction
