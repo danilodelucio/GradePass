@@ -12,7 +12,7 @@
 ---
 
 # Introduction 📝
-The **GradePass** node is designed to grade render passes directly without the need to extract them. It uses the subtractive method, and you can view and tweak the selected AOV in one single node.
+The **GradePass** node is designed to grade render passes directly without needing to extract them. It uses the subtractive method, and you can view and tweak the selected AOV in one single node.
 
 It contains the same knobs as the Grade node, along with Hue Rotation, Saturation and some extra features.
 
