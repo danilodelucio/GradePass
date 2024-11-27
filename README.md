@@ -4,6 +4,7 @@
 
 # Quick Access 🔗
 - [Introduction](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#introduction-)
+- [How to Use](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#how-to-use-)
 - [Nuke Compatibility](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#nuke-compatibility-%EF%B8%8F)
 - [Troubleshooting](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#troubleshooting-%EF%B8%8F)
 - [Support me](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#support-me-)
