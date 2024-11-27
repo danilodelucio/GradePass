@@ -18,6 +18,9 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 ![Screenshot 2024-11-26 203647](https://github.com/user-attachments/assets/44bfe902-7b61-4f73-a59e-9fa0efec1c69)
 
+> [!IMPORTANT]
+> _This node does not address **NaN**/**Infinite** values or perform complex calculations to fix AOV issues._
+
 # How to Use 📖
 
 <h2>Viewer - Final Result</h2>
