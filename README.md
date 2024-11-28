@@ -53,6 +53,14 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 - The **GradePass** node was created in **Nuke 12.1v5**, but it's designed to work on any Nuke version, including Commercial, Non-Commercial and Indie.
 
+# Installing ⚙️
+
+- You can download all the content by clicking on the green button, then **Download Zip**;
+
+![image](https://github.com/user-attachments/assets/4fd1b030-6d93-4b15-8d88-c9f661d75119)
+
+- Drag and drop the GradePass.nk file into your Nuke;
+
 # Troubleshooting 🛠️
 
 If you have feedback, suggestions, or feature requests, please visit the [Discussions](https://github.com/danilodelucio/GradePass/discussions) page and create a **New Discussion**.
