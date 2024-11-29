@@ -69,6 +69,10 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 ![drag_and_drop_v1_](https://github.com/user-attachments/assets/c34836d9-6ce5-48e2-a581-66c01a640cb6)
 
+- Alternatively, you can click on the **GradePass.nk** file here on GitHub -> `Copy Raw file` button, then paste it into your Nuke;
+
+![copy_raw_v1_](https://github.com/user-attachments/assets/62d294f1-52b2-4dcd-a8b4-871c4db128eb)
+
 # Troubleshooting 🛠️
 
 If you have feedback, suggestions, or feature requests, please visit the [Discussions](https://github.com/danilodelucio/GradePass/discussions) page and create a **New Discussion**.
@@ -89,5 +93,9 @@ If you find this tool useful, please consider supporting me on [Buy Me A Coffee]
 > _If you donate any amount, please mention this tool (also your preference name if you want to), so your name will appear in the **Supporters** list above._
 
 You can also share this tool or send me a positive message, it would help me in the same way.
+
+---
+
+Special thanks to Gustavo Goncalves, Marco Silva, Leticia Matsuoka and Wesley Junior for testing this tool and providing valuable feedback for improvement.
 
 # Cheers! 🥂
