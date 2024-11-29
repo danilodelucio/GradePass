@@ -53,8 +53,7 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 # Light Groups
 
-- **GradePass** also works for **Light Groups**;
-
+- **GradePass** also works with **Light Groups**;
 
 # Nuke Compatibility ☢️
 
@@ -66,7 +65,9 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 ![image](https://github.com/user-attachments/assets/4fd1b030-6d93-4b15-8d88-c9f661d75119)
 
-- Drag and drop the GradePass.nk file into your Nuke;
+- Drag and drop the **GradePass.nk** file into your Nuke;
+
+![drag_and_drop_v1_](https://github.com/user-attachments/assets/c34836d9-6ce5-48e2-a581-66c01a640cb6)
 
 # Troubleshooting 🛠️
 
