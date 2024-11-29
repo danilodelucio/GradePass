@@ -5,7 +5,7 @@
 # Quick Access 🔗
 - [Introduction](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#introduction-)
 - [How to Use](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#how-to-use-)
-- Light Groups
+- [Light Groups](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#light-groups)
 - [Installing](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#installing-%EF%B8%8F)
 - [Nuke Compatibility](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#nuke-compatibility-%EF%B8%8F)
 - [Troubleshooting](https://github.com/danilodelucio/GradePass?tab=readme-ov-file#troubleshooting-%EF%B8%8F)
