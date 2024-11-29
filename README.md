@@ -35,7 +35,7 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 - It allows you to isolate and check what passes you want to work on (similar to the **Shuffle** node);
 
-![solo_aov_v2_](https://github.com/user-attachments/assets/a370995b-abb5-467e-863e-f408239b6030)
+![solo_aov_v3_](https://github.com/user-attachments/assets/d43e4d47-ad80-49e6-8e91-b1bc4223a1da)
 
 - You can use it along with the **Disable Adjustments** option to disable all the changes while you check the selected AOV;
 
