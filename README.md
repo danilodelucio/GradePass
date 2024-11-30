@@ -53,7 +53,9 @@ It contains the same knobs as the Grade node, along with Hue Rotation, Saturatio
 
 # Light Groups
 
-- **GradePass** also works with **Light Groups**;
+- **GradePass** also works with **Light Groups**, so you can control their intensities individually;
+
+![light_groups_v1_](https://github.com/user-attachments/assets/f1fc9bb1-326d-4cb1-8e78-d72a70dd5fd0)
 
 # Nuke Compatibility ☢️
 
