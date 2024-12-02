@@ -82,7 +82,7 @@ If you have feedback, suggestions, or feature requests, please visit the [Discus
 For bugs, please go to the [Issues](https://github.com/danilodelucio/GradePass/issues) page and create a **New Issue**.
 
 # Supporters 💪
--
+- Gustavo Goncalves;
 
 # Support me! 🥺
 
