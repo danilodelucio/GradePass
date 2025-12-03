@@ -81,19 +81,12 @@ If you have feedback, suggestions, or feature requests, please visit the [Discus
 
 For bugs, please go to the [Issues](https://github.com/danilodelucio/GradePass/issues) page and create a **New Issue**.
 
-# Supporters 💪
-Gustavo Goncalves | ☕☕☕☕☕
---- | ---
+# Support me! ☕
 
-# Support me! 🥺
+![Supporters Page](https://danilodelucio.com/wp-content/uploads/2025/12/supporter-badges.jpg)
 
-![image](https://github.com/user-attachments/assets/271b46ae-183f-4918-8e11-14b3cbf0fb5b)
-
-This personal project required significant time and extra hours of hard work to make it available to everyone.
-
-If you find this tool useful, please consider supporting me on [Buy Me A Coffee](https://buymeacoffee.com/danilodelucio). ☕
-
-> _If you donate any amount, please mention this tool (also your preference name if you want to), so your name will appear in the **Supporters** list above._
+## Enjoying this tool?
+Support me with a coffee on my [Supporters](https://www.danilodelucio.com/supporters) page — get a badge and join the wall of supporters! 😎
 
 You can also ⭐ _star this repository_ ⭐ — it helps a lot with visibility and motivates me to keep developing tools for VFX.
 
